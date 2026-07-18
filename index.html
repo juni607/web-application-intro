@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>從網頁到 Web Application</title>
+  <style>
+    :root{--ink:#193459;--muted:#657b98;--panel:#fff;--line:#dce7f4;--html:#ef7643;--css:#4288e9;--js:#dfad08;--fe:#14aa97;--be:#8168dc;--db:#3d76c9;--bg:#f6f9fd}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 92% 2%,#dceeff 0,transparent 25%),radial-gradient(circle at 5% 95%,#f9e4dc 0,transparent 25%),var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif;overflow:hidden}.slide{position:fixed;inset:0;padding:clamp(3rem,7vw,7rem);display:grid;place-items:center;opacity:0;transform:translateX(4%);pointer-events:none;transition:.42s ease}.slide.active{opacity:1;transform:none;pointer-events:auto}.slide::before{content:"";position:absolute;width:55vw;height:55vw;border-radius:50%;background:radial-gradient(circle,rgba(113,172,241,.16),transparent 66%);top:-30vw;right:-23vw;pointer-events:none}.content{width:min(1200px,100%);position:relative}.eyebrow{color:#4d82c6;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800}.title{font-size:clamp(2.5rem,5.2vw,5.3rem);line-height:1.08;letter-spacing:-.055em;margin:.45rem 0 1.25rem}.lead{font-size:clamp(1.05rem,1.65vw,1.4rem);line-height:1.7;color:var(--muted);max-width:760px}.accent{color:var(--html)}.grid{display:grid;gap:1.25rem}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card,.code,.browser{background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:20px;padding:clamp(1.2rem,2vw,2rem);box-shadow:0 16px 40px rgba(44,82,128,.10);transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease}.card:hover,.browser:hover,.code:hover{transform:translateY(-7px);border-color:#aac8e9;box-shadow:0 23px 45px rgba(44,82,128,.16)}.card h3{font-size:1.25rem;margin:.15rem 0 .7rem}.card p,.card li{color:var(--muted);line-height:1.6}.tag{display:inline-flex;padding:.36rem .7rem;border-radius:999px;background:#e8f2ff;color:#3975bb;font-size:.8rem;font-weight:800;transition:.2s}.tag:hover,.pill:hover{transform:translateY(-2px);box-shadow:0 6px 12px rgba(58,111,173,.16)}.icon{font-size:2.4rem;margin-bottom:1rem}.browser{padding:0;overflow:hidden}.bar{height:36px;background:#eaf1fa;display:flex;align-items:center;gap:6px;padding:0 14px}.bar i{width:9px;height:9px;border-radius:50%;background:#ff7676}.bar i:nth-child(2){background:#ffd36a}.bar i:nth-child(3){background:#58d8a3}.browser-body{padding:2rem;background:#fff;color:#162f53;min-height:215px}.browser-body button,.demo button{border:0;border-radius:9px;background:#326bea;color:white;padding:.7rem 1rem;font:inherit;transition:.2s;cursor:pointer}.browser-body button:hover,.demo button:hover{transform:translateY(-2px);box-shadow:0 9px 17px rgba(50,107,234,.28)}.system-lines{position:absolute;inset:15% -5% auto 36%;height:260px;border-top:1px solid rgba(86,173,255,.35);border-radius:50%;transform:rotate(-10deg);z-index:-1}.pill{display:inline-block;padding:.45rem .75rem;margin:.2rem;border:1px solid #bdd1eb;border-radius:99px;color:#4a6e99;background:#f8fbff;transition:.2s}.flow{display:flex;align-items:center;justify-content:center;gap:clamp(.4rem,1.5vw,1.4rem);margin-top:2.8rem}.node{width:clamp(90px,12vw,150px);aspect-ratio:1;display:grid;place-items:center;text-align:center;border:1px solid #bfd2e9;border-radius:20px;background:#fff;font-weight:700;box-shadow:0 10px 25px rgba(40,76,119,.08);transition:.24s}.node:hover{transform:translateY(-8px) rotate(-1deg);border-color:#5d9ce2;box-shadow:0 18px 30px rgba(40,100,170,.17)}.arrow{color:#5296dc;font-size:2.1rem}.small{font-size:.88rem;color:var(--muted)}.code{font:clamp(.82rem,1.2vw,1rem)/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;color:#395477}.code b{color:var(--html);font-weight:700}.structure .tree{padding:.8rem 0 .8rem 1.2rem;border-left:2px solid #9cbde1;margin:.4rem}.hot{background:#fff1e9;outline:1px solid var(--html);border-radius:4px}.switches{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}.switches button{background:#fff;border:1px solid #c7d7eb;color:#527096;padding:.6rem .9rem;border-radius:9px;cursor:pointer;font:inherit;transition:.2s}.switches button:hover{transform:translateY(-2px);background:#eef6ff;border-color:#81afe2;box-shadow:0 7px 14px rgba(42,101,164,.12)}.switches button.selected{background:#3779c4;border-color:#3779c4;color:#fff}.split-label{font-weight:800;font-size:1.45rem;margin-bottom:.7rem}.allow{border-color:rgba(20,170,151,.42)}.deny{border-color:rgba(240,116,116,.45)}.stage{min-height:225px}.stage.styled{background:#f5f7ff;border-radius:16px;padding:1.25rem;color:#1e2a49}.stage.styled h3{color:#345fc2}.stage.styled button{background:#376ee6}.stage.dynamic button{cursor:pointer}.static-server{display:grid;place-items:center}.server{background:#e8f2ff;border:1px solid #9fc0e8;border-radius:18px;padding:1.1rem;width:150px;text-align:center;transition:.24s}.server:hover{transform:scale(1.05);box-shadow:0 14px 26px rgba(54,118,191,.17)}.users{display:flex;gap:1.6rem;justify-content:center;color:#6092cb;font-size:2rem}.spectrum{display:grid;grid-template-columns:1fr auto 1fr;gap:1.5rem;align-items:center}.spectrum .card:last-child{border-color:rgba(20,170,151,.55)}.architecture{display:flex;gap:1rem;align-items:center;justify-content:center}.arch-node{min-width:155px;padding:1.5rem 1rem;text-align:center;border-radius:16px;background:#fff;border:1px solid #bed2e9;box-shadow:0 10px 24px rgba(40,76,119,.07);transition:.24s}.arch-node:hover{transform:translateY(-6px);box-shadow:0 18px 28px rgba(40,76,119,.14)}.arch-node strong{display:block;font-size:1.2rem}.arch-node.front{border-color:var(--fe)}.arch-node.back{border-color:var(--be)}.arch-node.database{border-color:var(--db)}.annotated{position:relative;padding:1.2rem;border:1px solid #bcd3eb;border-radius:18px;background:#fff;color:#1c2a47;box-shadow:0 12px 25px rgba(40,76,119,.08)}.annotated .nav,.annotated .search,.annotated .product,.annotated .action{border:2px solid var(--fe);border-radius:8px;padding:.45rem;margin:.5rem;transition:.2s}.annotated .nav:hover,.annotated .search:hover,.annotated .product:hover,.annotated .action:hover{background:#e8fbf7;transform:translateX(4px)}.tables{display:grid;gap:1rem}table{border-collapse:collapse;width:100%;font-size:.88rem}th,td{padding:.55rem;border-bottom:1px solid #dbe6f2;text-align:left}th{color:#3f78ba}.lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem;margin-top:1rem}.lane{border-radius:13px;padding:1rem;border:1px solid #c5d7eb;background:rgba(255,255,255,.62);min-height:300px}.lane h4{margin:0 0 .8rem;color:#4c78ad}.step{margin:.55rem 0;padding:.55rem;background:#eaf3fd;border-radius:7px;font-size:.82rem;line-height:1.35;transition:.2s}.step:hover{transform:translateX(4px);background:#dceeff}.step.good{border-left:3px solid #40b991}.step.bad{border-left:3px solid #e66f6f}.path{display:flex;align-items:stretch;gap:.65rem}.path .card{flex:1;padding:1rem;text-align:center}.nav-ui{position:fixed;z-index:5;inset:auto 0 1.5rem;display:flex;align-items:center;justify-content:center;gap:1rem}.nav-ui button{width:40px;height:40px;border-radius:50%;border:1px solid #b8cde5;background:rgba(255,255,255,.9);color:#3671b6;font-size:1.25rem;cursor:pointer;box-shadow:0 4px 14px rgba(40,76,119,.1);transition:.2s}.nav-ui button:hover{transform:translateY(-3px) scale(1.08);background:#3779c4;color:#fff;box-shadow:0 9px 20px rgba(45,109,184,.25)}.counter{font-size:.85rem;letter-spacing:.12em;color:#5f7e9e;min-width:70px;text-align:center}.fullscreen{position:fixed;z-index:6;top:1.35rem;right:1.5rem;border:1px solid #b8cde5;background:rgba(255,255,255,.9);color:#3671b6;border-radius:9px;padding:.55rem .7rem;cursor:pointer;transition:.2s}.fullscreen:hover{transform:translateY(-2px);box-shadow:0 8px 17px rgba(45,109,184,.18);background:#e8f2ff}.chapter{position:fixed;z-index:5;left:1.5rem;top:1.5rem;color:#5d83b2;font-size:.78rem;letter-spacing:.1em}.start{font-size:1.05rem;padding:.85rem 1.25rem!important;background:linear-gradient(90deg,#e76f37,#ff9f5b)!important;box-shadow:0 10px 20px rgba(232,111,55,.25);cursor:pointer;transition:.2s}.start:hover{transform:translateY(-3px);box-shadow:0 15px 25px rgba(232,111,55,.34)}.hint{position:absolute;bottom:-4.5rem;color:#7891b5;font-size:.9rem}.reveal{opacity:0;transform:translateY(14px)}.active .reveal{animation:rise .5s forwards}.active .reveal:nth-child(2){animation-delay:.12s}.active .reveal:nth-child(3){animation-delay:.24s}@keyframes rise{to{opacity:1;transform:none}}@media(max-width:800px){.slide{padding:4rem 1.4rem 5rem;overflow:auto}.two,.three{grid-template-columns:1fr}.flow,.architecture,.path{flex-wrap:wrap}.arrow{transform:rotate(90deg)}.lanes{grid-template-columns:repeat(2,1fr)}.node{width:80px}.title{font-size:2.6rem}.hint{display:none}}
+    /* RWD：桌面、平板與手機均可直接閱讀與操作 */
+    @media(max-width:1100px){.slide{padding:5.5rem clamp(2rem,5vw,4rem)}.architecture{gap:.55rem}.arch-node{min-width:125px;padding:1.1rem .7rem}.flow{gap:.65rem}.node{width:110px}.path{gap:.45rem}.path .card{min-width:115px}.lanes{gap:.35rem}.lane{padding:.75rem}.step{font-size:.77rem}}
+    @media(max-width:800px){body{overflow:auto}.slide{position:absolute;min-height:100dvh;height:auto;padding:5.2rem 1.35rem 6.3rem;display:none;overflow:visible}.slide.active{display:grid}.slide::before{width:100vw;height:100vw;top:-45vw;right:-40vw}.content{width:100%}.two,.three{grid-template-columns:1fr}.title{font-size:clamp(2.35rem,11vw,3.45rem)}.lead{font-size:1rem}.grid{gap:1rem}.flow,.architecture,.path{flex-wrap:wrap;justify-content:center}.flow{margin-top:1.4rem}.node{width:90px;font-size:.85rem}.arrow{transform:rotate(90deg);font-size:1.65rem}.architecture .arrow{width:100%;text-align:center}.arch-node{min-width:calc(50% - .75rem);flex:1}.architecture .arch-node:last-child{max-width:220px}.spectrum{grid-template-columns:1fr}.spectrum .arrow{text-align:center;transform:rotate(90deg)}.browser-body{min-height:165px;padding:1.4rem}.code{overflow:auto;font-size:.8rem}.lanes{grid-template-columns:repeat(2,minmax(0,1fr))}.lane{min-height:0;padding:.8rem}.lane h4{font-size:.92rem}.path .card{flex:0 1 calc(50% - .4rem);min-width:0}.nav-ui{bottom:.85rem;gap:.75rem}.nav-ui button{width:42px;height:42px}.chapter{top:1.1rem;left:1.15rem}.fullscreen{top:1rem;right:1rem}.hint{display:none}}
+    @media(max-width:480px){.slide{padding-inline:1rem}.title{font-size:2.25rem}.eyebrow{font-size:.68rem}.card{border-radius:16px;padding:1.15rem}.icon{font-size:2rem}.node{width:76px;border-radius:15px}.flow{gap:.25rem}.flow .arrow{font-size:1.35rem}.arch-node{min-width:100%}.architecture .arch-node:last-child{max-width:none}.lanes{grid-template-columns:1fr}.path .card{flex-basis:100%}.switches{gap:.4rem}.switches button{font-size:.86rem;padding:.55rem .65rem}.counter{font-size:.75rem;min-width:64px}.annotated{padding:.8rem}.annotated .nav{font-size:.78rem}.tables{overflow-x:auto}.step{font-size:.82rem}}
+    @media(hover:none){.card:hover,.browser:hover,.code:hover,.node:hover,.arch-node:hover,.server:hover,.nav-ui button:hover,.start:hover,.fullscreen:hover,.switches button:hover{transform:none;box-shadow:inherit}.annotated .nav:hover,.annotated .search:hover,.annotated .product:hover,.annotated .action:hover,.step:hover{transform:none;background:inherit}}
+    .credit{position:fixed;z-index:5;left:1.5rem;bottom:1.55rem;color:#7891b5;font-size:.78rem;letter-spacing:.04em}
+    @media(max-width:800px){.credit{left:1rem;bottom:1rem;font-size:.7rem;opacity:.9}}
+    .cover-layout{display:grid;grid-template-columns:minmax(310px,.75fr) minmax(540px,1.45fr);gap:clamp(1.5rem,4vw,4rem);align-items:center}.cover-copy{padding:1rem 0}.cover-copy .title{font-size:clamp(2.6rem,4.5vw,4.8rem)}.cover-tags{margin:1.4rem 0}.cover-visual{margin:0;position:relative}.cover-visual::before{content:"";position:absolute;inset:6% -3% -4% 4%;background:linear-gradient(135deg,#d8edff,#fff1e8);border-radius:28px;transform:rotate(2deg);z-index:-1}.cover-visual img{display:block;width:100%;border-radius:20px;box-shadow:0 24px 54px rgba(41,83,135,.21);transition:transform .35s ease,box-shadow .35s ease}.cover-visual:hover img{transform:translateY(-8px) rotate(-.8deg);box-shadow:0 32px 65px rgba(41,83,135,.28)}.cover-visual figcaption{margin-top:.8rem;color:#6c85a6;font-size:.78rem;text-align:right}@media(max-width:1100px){.cover-layout{grid-template-columns:minmax(260px,.7fr) minmax(420px,1.3fr);gap:1.5rem}.cover-copy .title{font-size:clamp(2.45rem,4.8vw,3.8rem)}}@media(max-width:800px){.cover-layout{display:flex;flex-direction:column;align-items:stretch}.cover-copy{order:1;padding:0}.cover-visual{order:2}.cover-copy .title{font-size:clamp(2.35rem,11vw,3.45rem)}.cover-visual figcaption{text-align:left}.cover-visual:hover img{transform:none}}
+    /* --- Hamburger Menu Styles --- */
+    .menu-toggle {
+      position: fixed;
+      z-index: 10;
+      left: 1.5rem;
+      top: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #b8cde5;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(40, 76, 119, 0.1);
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .menu-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 17px rgba(45, 109, 184, 0.18);
+      background: #e8f2ff;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #3671b6;
+      border-radius: 2px;
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+      transform: scale(0);
+    }
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+    
+    .menu-drawer {
+      position: fixed;
+      z-index: 9;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(340px, 85vw);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--line);
+      box-shadow: 10px 0 40px rgba(44, 82, 128, 0.08);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 5.5rem 1.5rem 2rem;
+    }
+    .menu-drawer.open {
+      transform: translateX(0);
+    }
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 8;
+      background: rgba(25, 52, 89, 0.15);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .drawer-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .drawer-header h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+    }
+    .drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    .drawer-content::-webkit-scrollbar {
+      width: 6px;
+    }
+    .drawer-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .drawer-content::-webkit-scrollbar-thumb {
+      background: #cbdcf0;
+      border-radius: 3px;
+    }
+    .drawer-content::-webkit-scrollbar-thumb:hover {
+      background: #a9c6e8;
+    }
+    .menu-chapter-group {
+      margin-bottom: 1.2rem;
+    }
+    .menu-chapter-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #4d82c6;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      padding-left: 0.5rem;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 0.8rem;
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+      margin-bottom: 0.2rem;
+    }
+    .menu-item:hover {
+      background: rgba(55, 121, 196, 0.08);
+      color: var(--ink);
+      transform: translateX(4px);
+    }
+    .menu-item.active {
+      background: #3779c4;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(55, 121, 196, 0.2);
+    }
+    .menu-item-num {
+      font-size: 0.75rem;
+      font-family: ui-monospace, monospace;
+      opacity: 0.7;
+    }
+    .menu-item.active .menu-item-num {
+      opacity: 1;
+    }
+    .menu-item-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    /* Override chapter title position to clear space for hamburger button */
+    .chapter {
+      left: 4.8rem !important;
+      top: 1.85rem !important;
+    }
+    
+    /* RWD details for menu */
+    @media(max-width: 800px) {
+      .chapter {
+        left: 4.5rem !important;
+        top: 1.55rem !important;
+      }
+      .menu-toggle {
+        left: 1rem;
+        top: 1rem;
+        width: 36px;
+        height: 36px;
+      }
+      .menu-drawer {
+        padding-top: 4.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hamburger Menu Button -->
+  <button class="menu-toggle" id="menuToggle" aria-label="切換選單">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  
+  <!-- Hamburger Menu Drawer -->
+  <div class="menu-drawer" id="menuDrawer">
+    <div class="drawer-header">
+      <h3>課程大綱</h3>
+    </div>
+    <div class="drawer-content" id="menuList">
+      <!-- Generated via JS -->
+    </div>
+  </div>
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="chapter" id="chapter">01｜認識網頁</div><div class="credit">製作人：juni</div><button class="fullscreen" id="full" title="全螢幕">⛶</button>
+  <main>
+    <section class="slide active" data-chapter="01｜認識網頁"><div class="content cover-layout"><div class="cover-copy"><span class="tag reveal">Web fundamentals</span><h1 class="title reveal">從網頁到<br><span class="accent">Web Application</span></h1><p class="lead reveal">認識 HTML、前端、後端與資料庫。從你看見的畫面，一步步理解系統如何在幕後運作。</p><div class="cover-tags reveal"><span class="pill">HTML</span><span class="pill">Front-end</span><span class="pill">Back-end</span><span class="pill">Database</span></div><button class="start reveal" data-next>開始探索 →</button><p class="hint">使用方向鍵、空白鍵或底部按鈕切換頁面</p></div><figure class="cover-visual reveal"><img src="assets/web-application-anatomy.png" alt="Web Application 的 HTML、前端、後端與資料庫架構插圖"><figcaption>從一個使用者畫面，看見完整的 Web Application 架構。</figcaption></figure></div></section>
+    <section class="slide" data-chapter="01｜認識網頁"><div class="content"><span class="eyebrow">The big picture</span><h2 class="title">打開一個網站時，<br>畫面從哪裡來？</h2><p class="lead">你提出請求；伺服器準備內容；瀏覽器把內容變成你看見的畫面。</p><div class="flow"><div class="node">👤<br>使用者</div><div class="arrow">→</div><div class="node">▣<br>瀏覽器</div><div class="arrow">→</div><div class="node">☁<br>網路</div><div class="arrow">→</div><div class="node">▤<br>伺服器</div></div><div class="card" style="margin:2rem auto 0;max-width:620px;text-align:center"><span class="tag">← 回應</span><p>伺服器回傳 HTML、CSS、JavaScript 等檔案，瀏覽器再將它們顯示成網頁。</p></div></div></section>
+    <section class="slide" data-chapter="01｜認識網頁"><div class="content"><span class="eyebrow">Three terms</span><h2 class="title">網頁、網站與<br><span class="accent">Web Application</span></h2><div class="grid three"><article class="card"><div class="icon">▤</div><h3>網頁 Web Page</h3><p>一個單一頁面，例如一篇新聞或產品介紹。</p></article><article class="card"><div class="icon">▦</div><h3>網站 Website</h3><p>由多個網頁組成，例如公司官網、部落格。</p></article><article class="card" style="border-color:var(--fe)"><div class="icon">◫</div><h3>Web Application</h3><p>能在瀏覽器中完成任務的應用系統：登入、編輯、儲存、協作。</p></article></div></div></section>
+    <section class="slide" data-chapter="02｜HTML 的角色"><div class="content"><span class="eyebrow">HTML as text</span><h2 class="title">HTML 檔案<br>到底是什麼？</h2><p class="lead">它是一份使用特定標記描述內容的純文字檔，副檔名通常是 <span class="accent">.html</span>。</p><div class="grid two" style="margin-top:1.5rem"><div class="code" id="sourceCode">&lt;h1&gt;我的第一個網頁&lt;/h1&gt;\n&lt;p&gt;歡迎來到我的網站&lt;/p&gt;</div><div class="browser"><div class="bar"><i></i><i></i><i></i></div><div class="browser-body"><h2>我的第一個網頁</h2><p>歡迎來到我的網站</p></div></div></div><div class="switches"><button class="selected" data-view="code">看原始檔案</button><button data-view="result">看瀏覽器結果</button></div></div></section>
+    <section class="slide" data-chapter="02｜HTML 的角色"><div class="content"><span class="eyebrow">Document structure</span><h2 class="title">一份 HTML 的<br>基本結構</h2><p class="lead">滑過左側標籤，看看文件結構中相對應的位置。</p><div class="grid two"><pre class="code" id="htmlCode">&lt;!DOCTYPE html&gt;\n&lt;<b data-key="html">html</b>&gt;\n  &lt;<b data-key="head">head</b>&gt;\n    &lt;title&gt;我的網站&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;<b data-key="body">body</b>&gt;\n    &lt;h1&gt;Hello&lt;/h1&gt;\n  &lt;/body&gt;\n&lt;/html&gt;</pre><div class="card structure"><div class="tree" data-box="html"><strong>HTML</strong><div class="tree" data-box="head">Head <span class="small">— 設定與資訊</span><div class="tree">Title</div></div><div class="tree" data-box="body">Body <span class="small">— 畫面內容</span><div class="tree">Heading</div><div class="tree">Paragraph</div></div></div></div></div></div></section>
+    <section class="slide" data-chapter="02｜HTML 的角色"><div class="content"><span class="eyebrow">From code to screen</span><h2 class="title">瀏覽器如何<br>讀懂 HTML？</h2><div class="grid three" style="margin-top:1.5rem"><div class="code">&lt;h1&gt;課程介紹&lt;/h1&gt;\n&lt;p&gt;歡迎參加課程&lt;/p&gt;\n&lt;button&gt;立即報名&lt;/button&gt;</div><div class="card"><h3>結構樹</h3><div class="tree">Page<div class="tree">Heading</div><div class="tree">Paragraph</div><div class="tree">Button</div></div></div><div class="browser"><div class="bar"><i></i><i></i><i></i></div><div class="browser-body"><h2>課程介紹</h2><p>歡迎參加課程</p><button>立即報名</button></div></div></div><p class="lead" style="margin-top:1.5rem">取得 HTML → 閱讀標籤 → 建立層級關係 → 畫出畫面</p></div></section>
+    <section class="slide" data-chapter="02｜HTML 的角色"><div class="content"><span class="eyebrow">Capability boundary</span><h2 class="title">只有 HTML，<br>可以做到什麼？</h2><div class="grid two" style="margin-top:1.5rem"><div class="card allow"><div class="split-label">HTML 可以描述內容</div><p>標題、段落、圖片、連結、表格、表單欄位、影片與清單。</p></div><div class="card deny"><div class="split-label">只有 HTML 還無法完成</div><p>驗證帳密、儲存資料、查詢訂單、計算金額、判斷會員資格。</p></div></div><p class="lead" style="margin-top:1.4rem">HTML 負責描述畫面內容；完整的 Web Application 還需要其他技術。</p></div></section>
+    <section class="slide" data-chapter="02｜HTML 的角色"><div class="content"><span class="eyebrow">Front-end roles</span><h2 class="title">HTML、CSS、JavaScript<br>如何分工？</h2><div class="grid two"><div><div class="switches"><button class="selected" data-stage="plain">HTML</button><button data-stage="styled">+ CSS</button><button data-stage="dynamic">+ JavaScript</button></div><div class="card"><h3 id="stageTitle">HTML：內容與結構</h3><p id="stageText">像建築骨架，讓瀏覽器知道什麼是標題、文字和按鈕。</p></div></div><div class="stage" id="stage"><h3>我的課程</h3><p>從零開始了解網頁。</p><button id="demoBtn">了解更多</button></div></div></div></section>
+    <section class="slide" data-chapter="02｜HTML 的角色"><div class="content"><span class="eyebrow">Static website</span><h2 class="title">什麼是<br>靜態網站？</h2><p class="lead">每位使用者通常收到相同、預先準備好的內容。</p><div class="grid two" style="margin-top:1.5rem"><div class="static-server"><div class="server">▤<br><strong>Server</strong><hr><span class="small">index.html<br>style.css<br>script.js</span></div><div class="users">👤　👤　👤</div></div><div class="card"><h3>適合的情境</h3><p>公司介紹、活動網站、個人作品集、課程介紹、產品說明頁。</p><p>不一定需要後端與資料庫，通常載入快速、維護單純。</p></div></div></div></section>
+    <section class="slide" data-chapter="03｜Web Application 架構"><div class="content"><span class="eyebrow">From reading to doing</span><h2 class="title">什麼是<br><span class="accent">Web Application</span>？</h2><p class="lead">它讓使用者不只閱讀內容，更能完成工作。</p><div class="spectrum" style="margin-top:2rem"><div class="card"><span class="tag">資訊型網站</span><h3>閱讀</h3><p>看文章、看圖片、看產品介紹。</p></div><div class="arrow">→</div><div class="card"><span class="tag">Web Application</span><h3>操作</h3><p>登入、編輯、儲存、查詢、分享、協作。</p></div></div></div></section>
+    <section class="slide" data-chapter="03｜Web Application 架構"><div class="content"><span class="eyebrow">Core architecture</span><h2 class="title">Web Application 的<br>三個主要部分</h2><div class="architecture" style="margin-top:2rem"><div class="arch-node">👤<strong>使用者</strong></div><div class="arrow">↔</div><div class="arch-node front"><strong>Front-end</strong>使用者看到與操作</div><div class="arrow">↔</div><div class="arch-node back"><strong>Back-end</strong>處理規則與運算</div><div class="arrow">↔</div><div class="arch-node database"><strong>Database</strong>保存資料</div></div><div class="grid three" style="margin-top:2rem"><div class="card"><strong style="color:var(--fe)">前端</strong><p>用餐區與服務生</p></div><div class="card"><strong style="color:var(--be)">後端</strong><p>廚房與廚師</p></div><div class="card"><strong style="color:var(--db)">資料庫</strong><p>倉庫、冰箱與訂單紀錄</p></div></div></div></section>
+    <section class="slide" data-chapter="03｜Web Application 架構"><div class="content"><span class="eyebrow">The front-end</span><h2 class="title">前端是什麼？</h2><div class="grid two"><div class="annotated"><div class="nav">線上訂餐　　首頁　訂單　個人資料</div><div class="search">🔎 搜尋餐點</div><div class="product"><strong>今日推薦：義大利麵</strong><p>使用者看得到、點得到、輸入得到的部分。</p></div><div class="action">加入購物車</div></div><div class="card"><h3>前端負責</h3><p>顯示內容、接收輸入、處理畫面互動、檢查基本格式、向後端提出需求，再呈現結果。</p><p><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span><span class="pill">React</span><span class="pill">Vue</span></p></div></div></div></section>
+    <section class="slide" data-chapter="03｜Web Application 架構"><div class="content"><span class="eyebrow">Behind the screen</span><h2 class="title">後端與資料庫<br>是什麼？</h2><div class="grid two"><div class="card"><h3 style="color:var(--be)">⚙ 後端 Back-end</h3><p>接收前端請求、驗證身分、執行規則、計算結果、讀寫資料，最後回傳結果。</p><p><strong>後端負責處理事情。</strong></p></div><div class="card"><h3 style="color:var(--db)">▤ 資料庫 Database</h3><div class="tables"><table><tr><th colspan="3">Users</th></tr><tr><th>id</th><th>name</th><th>email</th></tr><tr><td>001</td><td>Amy</td><td>amy@example.com</td></tr></table><table><tr><th colspan="3">Orders</th></tr><tr><th>order_id</th><th>user_id</th><th>amount</th></tr><tr><td>A101</td><td>001</td><td>1,280</td></tr></table></div><p><strong>資料庫負責記住事情。</strong></p></div></div></div></section>
+    <section class="slide" data-chapter="04｜系統如何一起運作"><div class="content"><span class="eyebrow">A login journey</span><h2 class="title">一次登入，系統做了<br>哪些事情？</h2><div class="switches"><button class="selected" data-login="good">情境 A：登入成功</button><button data-login="bad">情境 B：密碼錯誤</button></div><div class="lanes"><div class="lane"><h4>使用者</h4><div class="step">① 輸入帳號密碼</div></div><div class="lane"><h4>前端</h4><div class="step">② 取得表單內容</div><div class="step">③ 傳送登入資料</div><div class="step loginResult good">⑨ 顯示會員首頁</div></div><div class="lane"><h4>後端</h4><div class="step">④ 檢查資料格式</div><div class="step">⑦ 判斷密碼是否正確</div><div class="step">⑧ 回傳登入結果</div></div><div class="lane"><h4>資料庫</h4><div class="step">⑤ 查詢帳號</div><div class="step">⑥ 回傳使用者紀錄</div></div></div></div></section>
+    <section class="slide" data-chapter="04｜系統如何一起運作"><div class="content"><span class="eyebrow">The mental model</span><h2 class="title">從 HTML 到<br><span class="accent">Web Application</span></h2><p class="lead">一個 Web Application，是多個角色一起完成的。</p><div class="path" style="margin-top:2rem"><div class="card"><strong style="color:var(--html)">HTML</strong><br><span class="small">內容與結構</span></div><div class="card"><strong style="color:var(--css)">+ CSS</strong><br><span class="small">外觀與排版</span></div><div class="card"><strong style="color:var(--js)">+ JavaScript</strong><br><span class="small">畫面互動</span></div><div class="card"><strong style="color:var(--fe)">Front-end</strong><br><span class="small">使用者操作</span></div><div class="card"><strong style="color:var(--be)">+ Back-end</strong><br><span class="small">規則與運算</span></div><div class="card"><strong style="color:var(--db)">+ Database</strong><br><span class="small">資料保存</span></div></div><div class="card" style="margin-top:1.6rem;text-align:center"><strong style="font-size:1.3rem">你在瀏覽器看到的是前端；看不到的地方，後端與資料庫正在一起工作。</strong></div></div></section>
+  </main>
+  <nav class="nav-ui"><button id="prev" aria-label="上一頁">←</button><span class="counter" id="counter">01 / 15</span><button id="next" aria-label="下一頁">→</button></nav>
+  <script>
+    const slides=[...document.querySelectorAll('.slide')];let current=0;
+    function show(n){
+      current=Math.max(0,Math.min(slides.length-1,n));
+      slides.forEach((s,i)=>s.classList.toggle('active',i===current));
+      document.getElementById('counter').textContent=String(current+1).padStart(2,'0')+' / '+slides.length;
+      document.getElementById('chapter').textContent=slides[current].dataset.chapter;
+      updateMenuActiveItem();
+    }
+    document.getElementById('next').onclick=()=>show(current+1);document.getElementById('prev').onclick=()=>show(current-1);document.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>show(current+1));
+    
+    // Hamburger Menu Logic
+    const menuToggle = document.getElementById('menuToggle');
+    const menuDrawer = document.getElementById('menuDrawer');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuList = document.getElementById('menuList');
+    
+    function toggleMenu() {
+      const isOpen = menuDrawer.classList.contains('open');
+      isOpen ? closeMenu() : openMenu();
+    }
+    
+    function openMenu() {
+      menuToggle.classList.add('open');
+      menuDrawer.classList.add('open');
+      menuOverlay.classList.add('open');
+    }
+    
+    function closeMenu() {
+      menuToggle.classList.remove('open');
+      menuDrawer.classList.remove('open');
+      menuOverlay.classList.remove('open');
+    }
+    
+    menuToggle.onclick = toggleMenu;
+    menuOverlay.onclick = closeMenu;
+    
+    // Generate Menu List dynamically
+    let currentChapter = '';
+    let currentGroup = null;
+    slides.forEach((slide, index) => {
+      const chapterName = slide.dataset.chapter || '未分類';
+      if (chapterName !== currentChapter) {
+        currentChapter = chapterName;
+        currentGroup = document.createElement('div');
+        currentGroup.className = 'menu-chapter-group';
+        
+        const groupTitle = document.createElement('div');
+        groupTitle.className = 'menu-chapter-title';
+        groupTitle.textContent = chapterName;
+        
+        currentGroup.appendChild(groupTitle);
+        menuList.appendChild(currentGroup);
+      }
+      
+      const item = document.createElement('div');
+      item.className = 'menu-item';
+      item.dataset.slideIndex = index;
+      
+      const numSpan = document.createElement('span');
+      numSpan.className = 'menu-item-num';
+      numSpan.textContent = String(index + 1).padStart(2, '0');
+      
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'menu-item-title';
+      
+      const titleEl = slide.querySelector('.title');
+      let titleText = titleEl ? titleEl.textContent.replace(/\s+/g, ' ').trim() : `第 ${index + 1} 頁`;
+      titleSpan.textContent = titleText;
+      
+      item.appendChild(numSpan);
+      item.appendChild(titleSpan);
+      
+      item.onclick = () => {
+        show(index);
+        closeMenu();
+      };
+      
+      currentGroup.appendChild(item);
+    });
+    
+    function updateMenuActiveItem() {
+      document.querySelectorAll('.menu-item').forEach(item => {
+        const isCurrent = parseInt(item.dataset.slideIndex) === current;
+        item.classList.toggle('active', isCurrent);
+      });
+    }
+    
+    // Initialize active item highlighting
+    updateMenuActiveItem();
+
+    addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeMenu();
+        return;
+      }
+      if (menuDrawer.classList.contains('open') && e.key === ' ') {
+        return; // Don't slide if menu is open and space is pressed
+      }
+      if (['ArrowRight', 'PageDown', ' '].includes(e.key)) {
+        e.preventDefault();
+        show(current + 1);
+      }
+      if (['ArrowLeft', 'PageUp'].includes(e.key)) {
+        e.preventDefault();
+        show(current - 1);
+      }
+    });
+    document.getElementById('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+    document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('selected',x===b));const code=document.getElementById('sourceCode');code.style.opacity=b.dataset.view==='code'?1:.25;});
+    document.querySelectorAll('[data-key]').forEach(x=>x.onmouseenter=()=>document.querySelector(`[data-box="${x.dataset.key}"]`).classList.add('hot'));document.querySelectorAll('[data-key]').forEach(x=>x.onmouseleave=()=>document.querySelector(`[data-box="${x.dataset.key}"]`).classList.remove('hot'));
+    const stage=document.getElementById('stage'),stageTitle=document.getElementById('stageTitle'),stageText=document.getElementById('stageText');document.querySelectorAll('[data-stage]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-stage]').forEach(x=>x.classList.toggle('selected',x===b));stage.className='stage '+(b.dataset.stage==='plain'?'':b.dataset.stage);const t={plain:['HTML：內容與結構','像建築骨架，讓瀏覽器知道什麼是標題、文字和按鈕。'],styled:['CSS：外觀與排版','加入色彩、間距、字體與版面，讓資訊更容易閱讀。'],dynamic:['JavaScript：互動與行為','按鈕、選單、內容切換等動作，通常由 JavaScript 負責。']}[b.dataset.stage];stageTitle.textContent=t[0];stageText.textContent=t[1]});document.getElementById('demoBtn').onclick=()=>{if(stage.classList.contains('dynamic'))document.getElementById('demoBtn').textContent='已加入！'};
+    document.querySelectorAll('[data-login]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-login]').forEach(x=>x.classList.toggle('selected',x===b));const r=document.querySelector('.loginResult');const ok=b.dataset.login==='good';r.textContent=ok?'⑨ 顯示會員首頁':'⑨ 顯示：密碼錯誤';r.className='step loginResult '+(ok?'good':'bad')});
+  </script>
+</body></html>
