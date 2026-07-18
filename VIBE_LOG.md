@@ -82,5 +82,10 @@
         *   實作側邊抽屜式選單 `.menu-drawer` 與背景遮罩 `.menu-overlay`，支援毛玻璃模糊效果與滑出動畫。
         *   透過 JavaScript 動態讀取投影片的 `data-chapter` 與 `.title` 標題，自動生成結構化的章節導覽列表，並具備點擊快速跳轉與目前所在頁面高亮（`.active`）功能。
         *   調整鍵盤監聽，加入 `Escape` 鍵關閉選單，以及在選單開啟時停用空白鍵翻頁功能以利捲動。
-*   **現狀確認**：確認靜態網頁（`index.html`）功能正常，包含 DOM 懸停高亮、三劍客分工、登入流程、漢堡選單等互動 Widget 皆可正常操作。
+*   **Git 本地初始化與遠端關聯**：
+        *   初始化本地 Git 儲存庫，新增 `.gitignore` 檔案排除系統快取。
+        *   將 Git 本地提交者設定為 `junicph@gmail.com` (Name: `juni`)。
+        *   完成本地首次提交（Initial Commit），並與遠端 GitHub 儲存庫 `https://github.com/juni607/web-application-intro` 建立關聯。
+*   **現狀確認**：確認靜態網頁（`index.html`）功能正常，包含 DOM 懸停高亮、三劍客分工、登入流程、漢堡選單等互動 Widget 皆可正常操作；本地程式碼已做好上傳 GitHub 的所有準備。
+
 
